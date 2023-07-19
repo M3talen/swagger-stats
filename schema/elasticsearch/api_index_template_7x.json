@@ -1,5 +1,7 @@
 {
-    "template": "api-*",
+    "index_patterns": [
+        "api-*"
+    ],
     "settings": {
         "index.refresh_interval": "1s",
         "analysis": {
@@ -11,10 +13,7 @@
             }
         }
     },
-
-    "version": 110,
     "mappings": {
-
         "dynamic_templates": [
             {
                 "reqheaders": {
@@ -35,6 +34,14 @@
             {
                 "reqquery": {
                     "path_match": "http.request.query.*",
+                    "mapping": {
+                        "type": "keyword"
+                    }
+                }
+            },
+            {
+                "reqbody": {
+                    "path_match": "http.request.body.*",
                     "mapping": {
                         "type": "keyword"
                     }
@@ -73,10 +80,8 @@
                 }
             }
         ],
-
         "properties": {
-
-            "@timestamp":{
+            "@timestamp": {
                 "type": "date"
             },
             "startts": {
@@ -106,7 +111,6 @@
             "port": {
                 "type": "long"
             },
-
             "node": {
                 "properties": {
                     "name": {
@@ -123,7 +127,6 @@
                     }
                 }
             },
-
             "http": {
                 "properties": {
                     "request": {
@@ -133,9 +136,6 @@
                             },
                             "url": {
                                 "type": "keyword"
-                            },
-                            "body": {
-                                "type": "flattened"
                             }
                         }
                     },
@@ -157,7 +157,6 @@
                     }
                 }
             },
-
             "api": {
                 "properties": {
                     "operationId": {
